@@ -6,17 +6,19 @@
 
 ```
 make run
-   Compiling wasi-runner v0.1.0 
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.92s
+   Compiling wasi-runner v0.1.0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.87s
      Running `target/debug/wasi-runner`
 
-ConversionRequest: ConversionRequest {
+Load time: 7.255360815s
+
+ConversionRequest {
     uid: "123",
     objects: [],
     target-version: None,
 }
 
-ConversionResponse: ConversionResponse {
+ConversionResponse {
     uid: "123",
     status: Some(
         StatusResult {
@@ -28,4 +30,6 @@ ConversionResponse: ConversionResponse {
     ),
     objects: [],
 }
+
+convert-objects execution time: 398.991µs
 ```

@@ -24,6 +24,7 @@ impl WasiView for State {
 }
 
 fn main() -> Result<()> {
+    let start_time = std::time::Instant::now();
     let mut builder = WasiCtxBuilder::new();
     builder.inherit_stdio();
     let engine = Engine::new(Config::new().wasm_component_model(true))?;
@@ -40,6 +41,8 @@ fn main() -> Result<()> {
     let mut linker = Linker::new(&engine);
     wasmtime_wasi::add_to_linker_sync(&mut linker)?;
     let convert = Conversion::instantiate(&mut store, &component, &linker)?;
+    let setup_complete = std::time::Instant::now();
+    println!("\nLoad time: {:?}\n", setup_complete - start_time);
 
     let request = ConversionRequest {
         uid: "123".to_string(),
@@ -49,6 +52,10 @@ fn main() -> Result<()> {
     println!("{request:#?}\n");
 
     let response = convert.call_convert_objects(&mut store, &request)?;
-    println!("{response:#?}");
+    println!("{response:#?}\n");
+
+    let end_time = std::time::Instant::now();
+    println!("convert-objects execution time: {:?}", end_time - setup_complete);
+
     Ok(())
 }
